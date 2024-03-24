@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react"
+import "./App.css"
+// import Point from "./components/Point"
+import { useMatrixContext } from "./context/MatrixContext"
+import { useRouterElement } from "./useRouterElement"
 
+//socket
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const { routerElement } = useRouterElement()
+  const { caroMatrix } = useMatrixContext()
+
+  return <div>{routerElement}</div>
+  // <div className="w-[100%] h-[100vh] flex flex-col items-center justify-center">
+  //   {caroMatrix.map((row, i) => {
+  //     return (
+  //       <div key={i} className="flex">
+  //         {caroMatrix[i].map((col, j) => {
+  //           return (
+  //             <Point
+  //               key={`${i}${j}`}
+  //               row={i}
+  //               col={j}
+  //             />
+  //           )
+  //         })}
+  //       </div>
+  //     )
+  //   })}
+  // </div>
 }
 
-export default App;
+export default App

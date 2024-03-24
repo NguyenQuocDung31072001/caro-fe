@@ -1,0 +1,14 @@
+.init-modal {
+    animation-name: modal_init ;
+    animation-duration: 0.5s;
+}
+
+@keyframes modal_init {
+    from {
+        opacity: 0;
+        top: 10px;
+    }
+    to {
+        opacity: 1;
+    }
+}
