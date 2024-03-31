@@ -10,21 +10,13 @@ interface IUsersInfoInRoom {
 export interface IRoomsListing {
   id: string
   name: string
-  status: "private" | "public"
   usersInfo: (IUsersInfoInRoom | null)[]
 }
 export default function HomePages() {
   const dataRooms: IRoomsListing[] = [
     {
-      id: "room 1",
-      name: "room 1",
-      status: "public",
-      usersInfo: [null, null],
-    },
-    {
       id: "room 2",
       name: "room 2",
-      status: "private",
       usersInfo: [
         {
           id: "user 1",
@@ -36,19 +28,20 @@ export default function HomePages() {
     {
       id: "room 3",
       name: "room 3",
-      status: "public",
       usersInfo: [
         {
           id: "user 1 ",
           name: "user 1 name",
         },
-        null,
+        {
+          id: "user 2",
+          name: "user 2 name",
+        },
       ],
     },
     {
       id: "room 4",
       name: "room 4",
-      status: "public",
       usersInfo: [
         {
           id: "user 1 ",
@@ -71,7 +64,6 @@ export default function HomePages() {
               key={room.id}
               id={room.id}
               name={room.name}
-              status={room.status}
               usersInfo={room.usersInfo}
             />
           )

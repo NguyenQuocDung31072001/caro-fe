@@ -5,13 +5,14 @@ interface PointProps {
   row: number
   col: number
 }
-const lengthOfMatrix = 3
-export default function Point({
-  row,
-  col,
-}: PointProps) {
-  const { caroMatrix, socket } =
-    useMatrixContext()
+function Point({ row, col }: PointProps) {
+  const {
+    caroMatrix,
+    setCaroMatrix,
+    currChar,
+    setCurrChar,
+  } = useMatrixContext()
+  const lengthOfMatrix = caroMatrix.length
 
   const isFirstRow = row === 0
   const isLastRow = row === lengthOfMatrix - 1
@@ -19,9 +20,12 @@ export default function Point({
   const isLastCol = col === lengthOfMatrix - 1
 
   const handleClick = () => {
+    let newChar: "x" | "o" =
+      currChar === "x" ? "o" : "x"
     const newCaroMatrix = [...caroMatrix]
-    newCaroMatrix[row][col] = "x"
-    socket.emit("Client-sent-data", newCaroMatrix)
+    newCaroMatrix[row][col] = newChar
+    setCurrChar(newChar)
+    setCaroMatrix(newCaroMatrix)
   }
   return (
     <div
@@ -41,3 +45,5 @@ export default function Point({
     </div>
   )
 }
+
+export default React.memo(Point)

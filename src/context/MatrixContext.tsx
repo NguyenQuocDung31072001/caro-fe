@@ -11,6 +11,10 @@ type MatrixContextProps = {
   setCaroMatrix: React.Dispatch<
     React.SetStateAction<string[][]>
   >
+  currChar: "x" | "o"
+  setCurrChar: React.Dispatch<
+    React.SetStateAction<"x" | "o">
+  >
   socket: Socket<
     DefaultEventsMap,
     DefaultEventsMap
@@ -27,14 +31,29 @@ const MatrixContext =
 export const useMatrixContext = () => {
   return useContext(MatrixContext)
 }
+const NumMatrix = 10
 
 export const MatrixContextProvider = ({
   children,
 }: Props) => {
   const [caroMatrix, setCaroMatrix] =
     React.useState<string[][]>([])
-  const [character, setCharacter] =
-    React.useState<string>("")
+  const [currChar, setCurrChar] = React.useState<
+    "x" | "o"
+  >("x")
+
+  React.useEffect(() => {
+    let _caroMatrix: string[][] = []
+
+    for (let i = 0; i < NumMatrix; i++) {
+      for (let j = 0; j < NumMatrix; j++) {
+        _caroMatrix[i] = _caroMatrix[i]
+          ? [..._caroMatrix[i], ""]
+          : [""]
+      }
+    }
+    setCaroMatrix(_caroMatrix)
+  }, [])
 
   // React.useEffect(() => {
   //   socket.on("connect", () => {
@@ -71,6 +90,8 @@ export const MatrixContextProvider = ({
   const value = {
     caroMatrix,
     setCaroMatrix,
+    currChar,
+    setCurrChar,
     socket,
   }
   return (

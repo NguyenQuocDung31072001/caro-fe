@@ -7,7 +7,6 @@ import { useModal } from "hook/useModal"
 export default function RoomInfoBlock({
   id,
   name,
-  status,
   usersInfo,
 }: IRoomsListing) {
   const navigate = useNavigate()
@@ -16,8 +15,7 @@ export default function RoomInfoBlock({
   const isFullUser = usersInfo.every((user) =>
     Boolean(user),
   )
-  const isValidRoom =
-    !isFullUser && status === "public"
+  const isValidRoom = !isFullUser
 
   const handleClick = () => {
     if (!isValidRoom) return
@@ -59,18 +57,7 @@ export default function RoomInfoBlock({
       </Modal>
 
       <div className="relative">
-        {status === "private" && (
-          <div className="absolute left-[50%] -translate-x-[50%] top-[50%] -translate-y-[50%]">
-            <TbLock />
-          </div>
-        )}
-        <div
-          className={`flex flex-col p-4  ${
-            status === "private"
-              ? "opacity-10"
-              : ""
-          }`}
-        >
+        <div className={`flex flex-col p-4`}>
           {usersInfo.map((_user) => {
             if (!_user) return <div>-</div>
             return (

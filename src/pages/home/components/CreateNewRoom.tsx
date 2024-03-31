@@ -9,14 +9,50 @@ import {
 
 export default function CreateNewRoom() {
   const { modalProps, Modal } = useModal()
-  const options = [
+  const timeTurnOptions = [
     {
-      value: "private",
-      label: "private",
+      value: 10,
+      label: "10s",
     },
     {
-      value: "public",
-      label: "public",
+      value: 20,
+      label: "20s",
+    },
+    {
+      value: 30,
+      label: "30s",
+    },
+    {
+      value: 40,
+      label: "40s",
+    },
+  ]
+  const totalTimeOptions = [
+    {
+      value: 2 * 60,
+      label: "2 phút",
+    },
+    {
+      value: 3 * 60,
+      label: "3 phút",
+    },
+    {
+      value: 4 * 60,
+      label: "4 phút",
+    },
+  ]
+  const whoPlayFirstOptions = [
+    {
+      value: "auto",
+      label: "Ngẫu nhiên",
+    },
+    {
+      value: "chủ phòng",
+      label: "Tôi bắt đầu trước",
+    },
+    {
+      value: "đối thủ",
+      label: "Đối thủ bắt đầu trước",
     },
   ]
   return (
@@ -25,13 +61,19 @@ export default function CreateNewRoom() {
         Create new room
       </button>
       <Modal {...modalProps}>
-        <Input
-          label="Room name"
-          placeholder="Room name"
-          type="text"
+        <Select
+          label="Thời gian mỗi lượt"
+          options={timeTurnOptions}
+        />
+        <Select
+          label="Số phút cho mỗi người chơi"
+          options={totalTimeOptions}
+        />
+        <Select
+          label="Ai chơi trước?"
+          options={whoPlayFirstOptions}
         />
         <div className="p-2" />
-        <Select options={options} />
         <div className="flex items-center justify-center mt-2">
           <Button
             label="Create new room"

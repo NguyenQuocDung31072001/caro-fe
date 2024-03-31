@@ -1,14 +1,16 @@
 import React, { useId } from "react"
 
 export interface IOptionSelectProps {
-  value: string
+  value: any
   label: string
 }
 export interface ISelectProps {
   readonly options: IOptionSelectProps[]
+  readonly label: string
 }
 export default function Select({
   options,
+  label,
 }: ISelectProps) {
   const id = useId()
 
@@ -18,7 +20,7 @@ export default function Select({
         htmlFor={`select-${id}`}
         className="block mb-2 text-sm font-medium  text-gray-900 dark:text-white"
       >
-        Select an option
+        {label}
       </label>
       <select
         id={`select-${id}`}
