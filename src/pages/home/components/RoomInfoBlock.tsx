@@ -1,20 +1,21 @@
-import React from "react"
-import { IRoomsListing } from ".."
-import { TbLock } from "react-icons/tb"
 import { useNavigate } from "react-router-dom"
 import { useModal } from "hook/useModal"
+import { UserInRoomType } from "context/MatrixContext"
+
+interface RoomInfoProps {
+  id: string
+  usersInfo: UserInRoomType[]
+}
 
 export default function RoomInfoBlock({
   id,
-  name,
   usersInfo,
-}: IRoomsListing) {
+}: RoomInfoProps) {
   const navigate = useNavigate()
   const { modalProps, Modal } = useModal()
 
-  const isFullUser = usersInfo.every((user) =>
-    Boolean(user),
-  )
+  const isFullUser = usersInfo?.length === 2
+
   const isValidRoom = !isFullUser
 
   const handleClick = () => {

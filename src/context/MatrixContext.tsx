@@ -6,6 +6,24 @@ import { socket } from "../socket"
 import { DefaultEventsMap } from "@socket.io/component-emitter"
 import { Socket } from "socket.io-client"
 
+export type UserInRoomType = {
+  id: string
+  name: string
+  timeRemaining: number // total time remaining
+  timeTurnRemaining: number // time remaining for each turn
+  character: "x" | "o"
+  myTurn: boolean
+}
+export type RoomType = {
+  id: string
+  config: {
+    timeTurn: number
+    totalTime: number
+    whoPlayFirst: string
+  }
+  user: UserInRoomType[]
+}
+
 type MatrixContextProps = {
   caroMatrix: string[][]
   setCaroMatrix: React.Dispatch<
@@ -14,6 +32,10 @@ type MatrixContextProps = {
   currChar: "x" | "o"
   setCurrChar: React.Dispatch<
     React.SetStateAction<"x" | "o">
+  >
+  rooms: RoomType[]
+  setRooms: React.Dispatch<
+    React.SetStateAction<RoomType[]>
   >
   socket: Socket<
     DefaultEventsMap,
@@ -36,6 +58,55 @@ const NumMatrix = 10
 export const MatrixContextProvider = ({
   children,
 }: Props) => {
+  const [rooms, setRooms] = React.useState<
+    RoomType[]
+  >([
+    {
+      id: "room1",
+      config: {
+        timeTurn: 10,
+        totalTime: 60,
+        whoPlayFirst: "userId1",
+      },
+      user: [
+        {
+          id: "userId1",
+          name: "user1",
+          timeRemaining: 60,
+          timeTurnRemaining: 10,
+          character: "x",
+          myTurn: true,
+        },
+        {
+          id: "userId2",
+          name: "user2",
+          timeRemaining: 60,
+          timeTurnRemaining: 10,
+          character: "o",
+          myTurn: false,
+        },
+      ],
+    },
+    {
+      id: "room2",
+      config: {
+        timeTurn: 20,
+        totalTime: 5 * 60,
+        whoPlayFirst: "userId1",
+      },
+      user: [
+        {
+          id: "userId1",
+          name: "user1",
+          timeRemaining: 60,
+          timeTurnRemaining: 10,
+          character: "x",
+          myTurn: true,
+        },
+      ],
+    },
+  ])
+
   const [caroMatrix, setCaroMatrix] =
     React.useState<string[][]>([])
   const [currChar, setCurrChar] = React.useState<
@@ -88,6 +159,8 @@ export const MatrixContextProvider = ({
   // }, [])
 
   const value = {
+    rooms,
+    setRooms,
     caroMatrix,
     setCaroMatrix,
     currChar,
